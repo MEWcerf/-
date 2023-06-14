@@ -1,0 +1,139 @@
+﻿<Page x:Class="LR1.Workers"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LR1"
+      xmlns:command="clr-namespace:LR1.Commands"
+      xmlns:core ="clr-namespace:LR1.Model"
+      xmlns:rule ="clr-namespace:LR1.ValidationRules"
+      mc:Ignorable="d" 
+      d:DesignHeight="500" d:DesignWidth="800"
+      Title="Workers" Loaded="Page_Loaded">
+    <Page.Resources>
+        <core:ListTitle x:Key="ListTitle" />
+    </Page.Resources>
+
+
+    <Grid Background="{DynamicResource BackgroundStyle}">
+        <Border Name="BorderFind" Height="150" Width="350" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10" BorderBrush="#FF082E05" BorderThickness="2" CornerRadius="7" Visibility="Hidden">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF72F0D9" Offset="1"/>
+                    <GradientStop Color="#FF8FE297" Offset="0"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="Find" Text="Поиск" FontSize="22" Height="30" Width="80" FontWeight="Bold" Grid.Column="1"/>
+                <TextBlock Name="TextBlockSurname" Text="Фамилия" FontSize="18" Height="25" Width="80" Grid.Row="1" HorizontalAlignment="Right" Margin="10"/>
+                <TextBlock Name ="TextBlockTitle" Text="Должность" FontSize="18" Height="25" Width="100" Grid.Row="2" HorizontalAlignment="Right" Margin="5"/>
+                <TextBox Name="TextBoxSurname" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Height="30" Width="180" HorizontalAlignment="Left" TextChanged="TextBoxSurname_TextChanged"/>
+                <ComboBox Name="ComboBoxTitle" ItemsSource="{Binding Source={StaticResource ListTitle}}" DisplayMemberPath="Title1" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Height="30" Width="180" HorizontalAlignment="Left" SelectionChanged="ComboBoxTitle_SelectionChanged"/>
+                <Button Name="ButtonFindSurname" ToolTip="Поиск по фамилии" IsEnabled="False" Grid.Column="2" Grid.Row="1" Height="35" Width="35" HorizontalAlignment="Right" Margin="10,0" Click="ButtonFindSurname_Click">
+                    <Image Source="Images\Binocl.png" />
+                </Button>
+                <Button Name="ButtonFindTitle" ToolTip="Поиск по должности" IsEnabled="False" Grid.Column="2" Grid.Row="2" Height="35" Width="35" HorizontalAlignment="Right" Margin="10,0" Click="ButtonFindTitle_Click">
+                    <Image Source="Images\Binocl.png" />
+                </Button>
+            </Grid>
+
+        </Border>
+
+        <Menu Margin="17,10,0,0" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" Width="400">
+            <Menu.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFD9D6D6" Offset="1"/>
+                    <GradientStop Color="White" Offset="0"/>
+                </LinearGradientBrush>
+            </Menu.Background>
+            <MenuItem Header="Действие" Height="35" Width="74" FontSize="14">
+                <MenuItem Header="Отменить" Command="Undo"/>
+                <MenuItem Header="Обновить" Command="Refresh"/>
+                <Separator/>
+                <MenuItem Header="Создать" Command="command:DataCommands.Add"/>
+                <MenuItem Header="Редактировать" Command="command:DataCommands.Edit"/>
+                <MenuItem Header="Сохранить" Command="command:DataCommands.Save"/>
+                <MenuItem Header="Найти" Command="command:DataCommands.Find"/>
+                <Separator/>
+                <MenuItem Header="Удалить" Command="Delete"/>
+            </MenuItem>
+            <MenuItem Header="Отчет" FontSize="14"/>
+        </Menu>
+
+        <ToolBar HorizontalAlignment="Left" Height="35" Margin="15,50,0,0" VerticalAlignment="Top" Width="400">
+            <Button x:Name="Undo" Command="Undo" ToolTip="Отменить редактирование/создание" Height="27" Width="30">
+                <Image Source="Images\Undo.png" Style="{DynamicResource ImageStyle}"/>
+            </Button>
+            <Button x:Name="Add" Command="command:DataCommands.Add" ToolTip="Добавить/Создание" Height="27" Width="30">
+                <Image Source="Images\Add.png" Style="{DynamicResource ImageStyle}" Height="19" Width="22"/>
+            </Button>
+            <Button x:Name="Edit" Command="command:DataCommands.Edit" ToolTip="Изменить/Редактировать" Height="27" Width="30">
+                <Image Source="Images\Edit.png" Style="{DynamicResource ImageStyle}" Height="17" Width="19"/>
+            </Button>
+            <Button x:Name="Binocl" Command="command:DataCommands.Find" ToolTip="Поиск" Height="27" Width="30">
+                <Image Source="Images\Binocl.png" Style="{DynamicResource ImageStyle}" Height="20" Width="23"/>
+            </Button>
+            <Button x:Name="Save" Command="command:DataCommands.Save" ToolTip="Сохранить" Height="27" Width="30">
+                <Image Source="Images\Save.png" Style="{DynamicResource ImageStyle}" Height="17" Width="19"/>
+            </Button>
+            <Button x:Name="Delete" Command="Delete" ToolTip="Удалить" Height="27" Width="30">
+                <Image Source="Images\Delete.png" Style="{DynamicResource ImageStyle}" Height="20" Width="26"/>
+            </Button>
+
+        </ToolBar>
+        <DataGrid Margin="25,170,25,10" Name="DataGridEmployee" ItemsSource="{Binding}" AutoGenerateColumns="False" HorizontalAlignment="Left" 
+                  MaxWidth="1000" MaxHeight="295" RowBackground="#FFE6D3EF" AlternatingRowBackground="#FC96CFD4" BorderBrush="#FF1F33EB"
+                  BorderThickness="3" IsReadOnly="True" RowHeight="25" Cursor="Hand" CanUserAddRows="False" CanUserDeleteRows="False">
+            <DataGrid.RowValidationErrorTemplate>
+                <ControlTemplate>
+                    <Grid Margin="0,-2,0,-2" ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}},Path=(Validation.Errors)[0].ErrorContent}">
+                        <Ellipse StrokeThickness="0" Fill="Red" Width="{TemplateBinding FontSize}" Height="{TemplateBinding FontSize}"/>
+                        <TextBlock Text="!" FontSize="{TemplateBinding FontSize}" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </DataGrid.RowValidationErrorTemplate>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Width="25" Binding="{Binding ID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Фамилия" Width="80" Binding="{Binding Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Имя" Width="80" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Отчество" Width="100" Binding="{Binding Patronymic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridComboBoxColumn Header="Должность" Width="90" ItemsSource="{Binding Source={StaticResource ListTitle}}" 
+                                    DisplayMemberPath="Title1" SelectedValueBinding="{Binding Path=TitleID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                    SelectedValuePath="ID"/>
+                <DataGridTemplateColumn Header="Дата рождения" Width="110" 
+                                        CellTemplate="{StaticResource DataTemplate}" 
+                                        CellEditingTemplate="{StaticResource EditingDataTemplate}"/>
+                <DataGridTextColumn Header="Телефон" Width="120" Binding="{Binding Telephone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Электронная почта" Width="*" EditingElementStyle="{StaticResource errorStyle}">
+                    <DataGridTextColumn.Binding >
+                        <Binding Path="Email" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" ValidatesOnExceptions ="True" >
+                            <Binding.ValidationRules>
+                                <rule:EmailRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Style="{DynamicResource LabaelStyle}" Content="Список сотрудников" HorizontalAlignment="Left" Margin="25,90,0,0" VerticalAlignment="Top"/>
+    </Grid>
+    <Page.CommandBindings>
+        <CommandBinding Command="Refresh" Executed="RefreshCommandBinding_Executed"/>
+        <CommandBinding Command="Undo" CanExecute="UndoCommandBinding_CanExecute" Executed="UndoCommandBinding_Executed"/>
+        <CommandBinding Command="Delete" CanExecute="DeleteCommandBinding_CanExecute" Executed="DeleteCommandBinding_Executed"/>
+        <CommandBinding Command="{x:Static command:DataCommands.Add}" CanExecute="AddCommandBinding_CanExecute" Executed="AddCommandBinding_Executed"/>
+        <CommandBinding Command="{x:Static command:DataCommands.Edit}" CanExecute="EditCommandBinding_CanExecute" Executed="EditCommandBinding_Executed"/>
+        <CommandBinding Command="{x:Static command:DataCommands.Find}" CanExecute="FindCommandBinding_CanExecute" Executed="FindCommandBinding_Executed"/>
+        <CommandBinding Command="{x:Static command:DataCommands.Save}" CanExecute="SaveCommandBinding_CanExecute" Executed="SaveCommandBinding_Executed"/>
+    </Page.CommandBindings>
+</Page>
