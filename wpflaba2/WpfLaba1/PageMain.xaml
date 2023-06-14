@@ -1,0 +1,36 @@
+﻿<Page x:Class="WpfLaba1.PageMain"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WpfLaba1"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="600"
+      Title="PageMain">
+
+    <Grid>
+
+        <TextBlock Foreground="Black" Margin="28,71,480,359"><Hyperlink NavigateUri="Sotrudniki.xaml" ><Run Text="Сотрудники"/></Hyperlink></TextBlock>
+        <TextBlock Margin="28,91,500,336" RenderTransformOrigin="0.384,0.457"><Hyperlink><Run Text="Клиенты"/></Hyperlink></TextBlock>
+        <TextBlock Margin="28,127,492,297"><Hyperlink><Run Text="Договоры"/></Hyperlink></TextBlock>
+        <TextBlock Margin="28,109,461,323"><Hyperlink><Run Text="Ценные бумаги"/></Hyperlink></TextBlock>
+        <TextBlock Margin="28,146,508,284" RenderTransformOrigin="0.5,0.5">
+            <TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="-0.289"/>
+                    <RotateTransform/>
+                    <TranslateTransform Y="-0.162"/>
+                </TransformGroup>
+            </TextBlock.RenderTransform><Hyperlink><Run Text="Сделки"/></Hyperlink></TextBlock>
+        <TextBlock Height="19" Margin="28,164,500,267"><Hyperlink><Run Text="Справка"/></Hyperlink></TextBlock>
+        <Button Style="{StaticResource BackgroundButtonResource}" 
+            Content="Выход" HorizontalAlignment="Left" Click="Button_Click">
+        </Button>
+        <Label Style="{StaticResource BackgroundLabelResource}"
+            Content="Что - то там" />
+       
+
+
+    </Grid>
+</Page>

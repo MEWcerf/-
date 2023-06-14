@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LR1.Entities
+namespace WpfLaba1.Entities
 {
     using System;
     using System.Collections.Generic;
@@ -18,24 +18,16 @@ namespace LR1.Entities
         public string Surname { get; set; }
         public string Name { get; set; }
         public string Patronymic { get; set; }
-        public Nullable<System.DateTime> BirstDate { get; set; }
         public string Telephone { get; set; }
         public string Email { get; set; }
+        public Nullable<System.DateTime> BirstDate { get; set; }
         public Nullable<int> TitleID { get; set; }
     
         public virtual Title Title { get; set; }
 
-        internal static Employee Add(int v1, string v2, string v3, string v4, int v5)
+        internal static Employee CreateEmployee(int v1, string v2, string v3, string v4, int v5)
         {
-            Employee employee = new Employee
-            {
-                ID = v1,
-                Surname = v2,
-                Name = v3,
-                Patronymic = v4,
-                TitleID = v5
-            };
-            return employee;
+            throw new NotImplementedException();
         }
     }
 }

@@ -97,7 +97,7 @@ namespace LR1
 
         private void AddCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            Employee employee = Employee.CreateEmployee(DataGridEmployee.Items.Count + 14, "не задано", "не задано", "не задано", 0);
+            Entities.Employee employee = Employee.Add(DataGridEmployee.Items.Count + 14, "не задано", "не задано", "не задано", 0);
             employee.Telephone = "не задано";
             employee.Email = "не задано";
             try
@@ -153,7 +153,7 @@ namespace LR1
 
         private void SaveCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBox.Show("Сохра");
+            MessageBox.Show("Сохранение");
             DataEntitiesEmployee.SaveChanges();
             isDirty = true;
             DataGridEmployee.IsReadOnly=true;
